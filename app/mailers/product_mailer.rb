@@ -4,8 +4,14 @@ class ProductMailer < ApplicationMailer
   #
   #   en.product_mailer.in_stock.subject
   #
+  include Rails.application.routes.url_helpers
+
   def in_stock
     @product = params[:product]
-    mail to: params[:subscriber].email
+    @subscriber = params[:subscriber]
+    mail(
+      to: @subscriber.email,
+      subject: "#{@product.name} is back in stock!"
+    )
   end
 end
